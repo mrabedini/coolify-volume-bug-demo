@@ -1,0 +1,43 @@
+services:
+  nginx:
+    build:
+      context: ./devops/nginx
+      dockerfile: Dockerfile
+    image: test-nginx:latest
+    hostname: nginx
+    ports:
+      - "80"
+    environment:
+      - NGINX_HOST=${SERVICE_FQDN_NGINX:-localhost}
+    volumes:
+      - ./static/:/var/www/static:ro
+      - ./media/:/var/www/media:ro
+    depends_on:
+      - web
+
+  web:
+    build:
+      context: ./devops/web
+      dockerfile: Dockerfile
+    image: test-web:latest
+    hostname: web
+    ports:
+      - "8000"
+    volumes:
+      - ./static/:/var/www/static
+      - ./media/:/var/www/media
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16-alpine
+    hostname: db
+    environment:
+      - POSTGRES_DB=testdb
+      - POSTGRES_USER=testuser
+      - POSTGRES_PASSWORD=testpass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
