@@ -104,7 +104,7 @@ This mutation affects all services processed after the first service with an FQD
 
 ## Related Issue
 
-See: [Coolify Issue #XXXX](https://github.com/coollabsio/coolify/issues/XXXX)
+See: [Coolify Issue #7343](https://github.com/coollabsio/coolify/issues/7343)
 
 ## License
 
